@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import os
+import time
 
 app = Flask(__name__)
 
@@ -89,6 +91,7 @@ def get_all_pages(pages):
         if not page_data:
             break
         all_books.extend(page_data)
+        time.sleep(0.5)
         
     return all_books
 
@@ -110,7 +113,9 @@ def books_api():
         })
 
 if __name__=="__main__":
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
+    
     
 
     
